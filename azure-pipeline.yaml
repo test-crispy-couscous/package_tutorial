@@ -23,8 +23,8 @@ jobs:
 
       - script: |
           poetry config repositories.devops https://pkgs.dev.azure.com/rafaelpmiranda0166/_packaging/rafaelpmiranda0166/pypi/upload/
-          poetry config http-basic.azure anything $SYSTEM_ACCESSTOKEN
-          poetry publish --repository azure --build
+          poetry config http-basic.devops anything $SYSTEM_ACCESSTOKEN
+          poetry publish --repository devops --build
         displayName: 'Build and Publish Package'
         env:
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
