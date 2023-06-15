@@ -1,0 +1,28 @@
+trigger:
+  branches:
+    include:
+      - main
+
+jobs:
+  - job: BuildAndPublish
+    displayName: 'Build and Publish Package'
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.10'
+        inputs:
+          versionSpec: '3.10'
+          addToPath: true
+          architecture: "x64"
+
+      - script: |
+        curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.5.1 python3 -
+        displayName: "Install poetry 1.5.1"
+
+      - script: |
+          poetry config repositories.devops https://pkgs.dev.azure.com/rafaelpmiranda0166/_packaging/rafaelpmiranda0166/pypi/upload/
+          poetry config http-basic.azure anything $(System.AccessToken)
+          poetry publish --repository azure --build
+        displayName: 'Build and Publish Package'
