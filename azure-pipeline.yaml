@@ -22,10 +22,10 @@ jobs:
         displayName: "Install poetry 1.5.1"
 
       - script: |
+          echo '$(Build.BuildNumber)' | sed 's/\.//g'
           poetry config repositories.devops https://pkgs.dev.azure.com/rafaelpmiranda0166/_packaging/rafaelpmiranda0166/pypi/upload/
           poetry config http-basic.devops anything $SYSTEM_ACCESSTOKEN
           poetry publish --repository devops --build
-          echo '$(Build.BuildNumber)' | sed 's/\.//g'
         displayName: 'Build and Publish Package'
         env:
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
