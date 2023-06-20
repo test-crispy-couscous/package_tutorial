@@ -17,6 +17,21 @@ jobs:
           addToPath: true
           architecture: "x64"
 
+      - task: PythonScript@0
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+        inputs:
+          arguments: --token $(SYSTEM_ACCESSTOKEN)
+          scriptSource: 'inline'
+          script: |
+            import argparse
+    
+            if __name__ == "__main__":
+              parser = argparse.ArgumentParser()
+              parser.add_argument("token")
+              args = parser.parse_args()
+              print(args.token) 
+
       - script: |
           curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.5.1 python3 -
         displayName: "Install poetry 1.5.1"
