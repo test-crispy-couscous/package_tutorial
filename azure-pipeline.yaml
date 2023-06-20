@@ -21,7 +21,7 @@ jobs:
         env:
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
         inputs:
-          arguments: "--token $SYSTEM_ACCESSTOKEN"
+          arguments: "--token $(SYSTEM_ACCESSTOKEN) --test-token $(System.AccessToken)"
           scriptSource: 'inline'
           script: |
             import argparse
@@ -29,8 +29,10 @@ jobs:
             if __name__ == "__main__":
               parser = argparse.ArgumentParser()
               parser.add_argument("--token")
+              parser.add_argument("--test-token")
               args = parser.parse_args()
-              print(args.token) 
+              print(args.token)
+              print(args.test_token)
 
       - script: |
           curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.5.1 python3 -
