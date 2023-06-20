@@ -21,7 +21,7 @@ jobs:
         env:
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
         inputs:
-          arguments: --token $(SYSTEM_ACCESSTOKEN)
+          arguments: "--token $SYSTEM_ACCESSTOKEN"
           scriptSource: 'inline'
           script: |
             import argparse
